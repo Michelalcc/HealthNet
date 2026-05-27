@@ -1,0 +1,249 @@
+<body onload="protegerRuta('diagnostico'); cargarUsuario();">
+  
+</body><!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Diagnóstico - HealthNet</title>
+
+<link rel="stylesheet" href="../css/layout.css">
+
+<style>
+
+  
+
+/* =========================
+   FONDO CLÍNICO PROFESIONAL
+========================= */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url("../assets/imagenes/fondo_diagnostico.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* capa oscura elegante */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(244, 246, 249, 0.85);
+  z-index: -1;
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: rgba(255,255,255,0.95);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+  transition: 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================
+   IMAGEN
+========================= */
+
+#preview {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* =========================
+   BARRA
+========================= */
+
+.barra-container {
+  width: 100%;
+  height: 22px;
+  background: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#barra {
+  height: 100%;
+  width: 0%;
+  transition: 0.5s;
+}
+
+/* COLORES */
+.verde { background: #28a745; }
+.amarillo { background: #ffc107; }
+.rojo { background: #dc3545; }
+
+.badge {
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+}
+
+button {
+  background: #1f3b57;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #2c5d85;
+}
+
+/* EVITA TAPADO */
+.content-wrapper {
+  padding: 20px;
+}
+
+</style>
+
+</head>
+
+<body onload="cargarUsuario(); marcarActivo('diagnostico')">
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+
+  <div class="logo">🏥 HealthNet</div>
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial Clínico</div>
+  <div onclick="location.href='perfil.html'">👤 Perfil Médico</div>
+  <div onclick="location.href='reportes.html'">📊 Reportes</div>
+  <div onclick="location.href='configuracion.html'">⚙️ Configuración</div>
+  <hr>
+
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
+
+    <div class="user-info">
+      <img id="imgUser" width="40">
+      <div>
+        <div id="nombreUser"></div>
+        <small id="rolUser"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="container">
+
+    <!-- IZQUIERDA -->
+    <div>
+
+      <div class="card">
+        <h3>Subir Imagen Médica</h3>
+        <input type="file" id="imageInput"><br><br>
+        <img id="preview">
+        <br><br>
+        <button onclick="analizar()">Analizar</button>
+      </div>
+
+      <div class="card" id="resultadoCard"></div>
+
+      <div class="card">
+        <h3>Probabilidad</h3>
+        <div class="barra-container">
+          <div id="barra"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DERECHA -->
+    <div>
+
+      <div class="card" id="pacienteCard"></div>
+
+      <div class="card" id="recomendacionCard"></div>
+
+      <div class="card">
+
+        <h3>Evaluación Clínica</h3>
+
+        <button onclick="setFibroma(true)">Sí Fibroma</button>
+        <button onclick="setFibroma(false)">No Fibroma</button>
+
+        <div id="nivelFibroma" class="hidden">
+          <br>
+          <select id="nivel">
+            <option value="leve">Leve</option>
+            <option value="moderado">Moderado</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button onclick="guardar()">Guardar Diagnóstico</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<input type="file" id="imgInput" />
+
+<select id="paciente_id">
+  <option value="1">Paciente 1</option>
+  <option value="2">Paciente 2</option>
+</select>
+
+<button onclick="analizarIA()">Analizar IA</button>
+
+<div id="resultado"></div>
+
+<button onclick="guardarDiagnostico()">Guardar diagnóstico</button>
+
+<script src="js/ia.js"></script>
+
+<script src="../js/layout.js"></script>
+<script src="../js/ia.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+.filtros {
+  margin-bottom: 20px;
+}
+
+.grid-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.grid-filtros input,
+.grid-filtros select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.grid-filtros button {
+  background: #1f3b57;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.historial-card {
+  background: white;
+  border-left: 6px solid #2c7be5;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.historial-card:hover {
+  transform: translateY(-3px);
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: white;
+}
+
+.verde { background: #28a745; }
+.amarillo { background: #ffc107; }
+.rojo { background: #dc3545; }

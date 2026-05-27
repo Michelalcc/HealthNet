@@ -1,0 +1,27 @@
+<body onload="loadUsers()">
+
+<div class="card">
+  <h2>👤 Gestión de Usuarios</h2>
+
+  <input id="email" placeholder="Correo">
+  <input id="password" placeholder="Password">
+
+  <select id="rol">
+    <option value="doctor">Doctor</option>
+    <option value="especialista">Especialista</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <select id="hospital">
+    <option value="1">Cayetano</option>
+    <option value="2">Loayza</option>
+    <option value="3">Dos de Mayo</option>
+  </select>
+
+  <button onclick="createUser()">Crear Usuario</button>
+</div>
+
+<div id="userList"></div>
+
+<script src="../js/users.js"></script>
+</body>

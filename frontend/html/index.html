@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>HealthNet - Login</title>
+
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body class="login-bg">
+
+  <div class="login-wrapper">
+
+    <div class="login-box">
+
+      <!-- 🟢 LOGO ARRIBA -->
+      <img src="../assets/imagenes/logos/logo.png" class="logo">
+
+      <h1>HealthNet</h1>
+      <p class="subtitle">Sistema Inteligente de Diagnóstico Clínico</p>
+
+      <!-- INPUTS -->
+      <input type="email" id="email" placeholder="Correo institucional">
+      <input type="password" id="password" placeholder="Contraseña">
+
+      <button onclick="login()">Ingresar</button>
+
+      <!-- ERROR -->
+      <p id="errorMsg" class="error"></p>
+
+    </div>
+
+  </div>
+
+  <script src="../js/auth.js"></script>
+
+</body>
+</html>

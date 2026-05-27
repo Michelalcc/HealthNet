@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>HealthNet - Dashboard</title>
+
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body onload="initDashboard()" class="dashboard-bg">
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar"></div>
+
+<!-- MAIN -->
+<div class="main-content">
+
+  <!-- HEADER -->
+  <div class="header">
+
+    <span onclick="toggleMenu()" style="font-size:22px;cursor:pointer;">☰</span>
+
+    <div class="header-info">
+
+      <div class="user-info">
+        <b id="nombreUser"></b><br>
+        <small id="rolUser"></small>
+      </div>
+
+      <div class="hospital-info">
+        <b id="nombreHospital"></b>
+      </div>
+
+      <img id="imgUser" width="45">
+
+    </div>
+
+  </div>
+
+  <!-- TITULO -->
+  <div class="card">
+    <div class="dashboard-title">Panel Clínico</div>
+    <div class="dashboard-subtitle" id="subtituloHospital"></div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+
+    <div class="card filtros">
+      <h3>🧬 Filtros Clínicos</h3>
+
+      <div class="filtros-grid">
+        <select id="filtroGenero" onchange="cargarPacientes()">
+          <option value="">Todos</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+
+        <select id="orden" onchange="cargarPacientes()">
+          <option value="desc">Más recientes</option>
+          <option value="asc">Más antiguos</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="listaPacientes"></div>
+
+    <div class="card">
+      <h3>📊 Estadísticas Clínicas</h3>
+      <p>Total pacientes: --</p>
+      <p>Diagnósticos hoy: --</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="../js/layout.js"></script>
+<script src="../js/proteccion.js"></script>
+<script src="../js/dashboard.js"></script>
+
+<script>
+function initDashboard() {
+
+  // 🔐 1. proteger acceso
+  proteger("dashboard");
+
+  // 👤 2. cargar usuario y UI
+  cargarUsuario();
+
+  // 📊 3. cargar estadísticas dashboard (FASE 3)
+  cargarDashboard();
+
+  // 👥 4. cargar pacientes si existe la función
+  if (typeof cargarPacientes === "function") {
+    cargarPacientes();
+  }
+}
+</script>
+
+</body>
+</html>

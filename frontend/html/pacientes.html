@@ -1,0 +1,30 @@
+<body onload="protegerRuta('pacientes'); cargarUsuario();">
+  
+</body><div class="filtro-bar">
+
+  <input 
+    type="text"
+    id="buscarPaciente"
+    placeholder="Buscar paciente..."
+  >
+
+  <select id="filtroGenero">
+    <option value="">Todos</option>
+    <option value="Masculino">Masculino</option>
+    <option value="Femenino">Femenino</option>
+  </select>
+
+  <select id="ordenar">
+    <option value="">Ordenar</option>
+    <option value="az">A - Z</option>
+    <option value="za">Z - A</option>
+  </select>
+
+  <!-- 🔍 BOTÓN LUPA -->
+  <button onclick="aplicarFiltros()" class="btn-filtro">
+    🔍
+  </button>
+
+</div>
+
+<div id="listaPacientes"></div>

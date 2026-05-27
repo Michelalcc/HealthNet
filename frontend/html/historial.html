@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Historial Clínico - HealthNet</title>
+
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/historial.css">
+
+</head>
+
+<body onload="cargarUsuario(); cargarHistorial(); marcarActivo('historial')">
+
+  <button onclick="descargarPDFGeneral()" style="margin-bottom:15px;">
+  📊 Descargar Historial Completo
+</button>
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+  <div class="logo">🏥 HealthNet</div>
+
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial Clínico</div>
+  <div onclick="location.href='perfil.html'">👤 Perfil</div>
+
+  <hr>
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span onclick="toggleMenu()">☰</span>
+
+    <div class="user-info">
+      <img id="imgUser" width="40">
+      <div>
+        <div id="nombreUser"></div>
+        <small id="rolUser"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="card filtros">
+
+    <h3>Filtros Clínicos</h3>
+
+    <div class="grid-filtros">
+
+      <input id="fNombre" placeholder="Nombre paciente">
+
+      <select id="fGenero">
+        <option value="">Género</option>
+        <option>Masculino</option>
+        <option>Femenino</option>
+      </select>
+
+      <input id="fHospital" placeholder="Hospital">
+
+      <input id="fDoctor" placeholder="Doctor">
+
+      <select id="orden">
+        <option value="reciente">Más reciente</option>
+        <option value="antiguo">Más antiguo</option>
+        <option value="prob">Mayor probabilidad</option>
+      </select>
+
+      <button onclick="aplicarFiltros()">🔍 Buscar</button>
+
+    </div>
+
+  </div>
+
+  <!-- RESULTADOS -->
+  <div id="listaHistorial"></div>
+
+</div>
+
+<script src="../js/layout.js"></script>
+<script src="../js/historial.js"></script>
+
+</body>
+</html>

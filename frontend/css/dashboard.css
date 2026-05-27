@@ -1,0 +1,30 @@
+.dashboard-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.dashboard-subtitle {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+/* GRID HOSPITALARIO */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* PACIENTES LISTA */
+.paciente-card {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 10px;
+  border-left: 5px solid #2c7be5;
+  transition: 0.3s;
+}
+
+.paciente-card:hover {
+  transform: scale(1.01);
+}

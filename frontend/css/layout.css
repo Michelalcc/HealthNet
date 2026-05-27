@@ -1,0 +1,349 @@
+/* =========================
+   BASE GENERAL
+========================= */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f6f9;
+  overflow-x: hidden;
+}
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root {
+  --primary: #1565c0;
+  --secondary: #ffffff;
+}
+
+/* =========================
+   SIDEBAR MODERNO
+========================= */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+
+  background: var(--primary);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 18px 12px;
+  gap: 6px;
+
+  overflow-y: auto;
+  z-index: 1000;
+
+  box-shadow: 8px 0 25px rgba(0,0,0,0.25);
+}
+
+.sidebar {
+  transition: all 0.3s ease;
+}
+
+/* efecto glass leve encima del color del hospital */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 0;
+}
+
+.sidebar > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* LOGO */
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  padding: 14px;
+  margin-bottom: 10px;
+
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ITEMS */
+.sidebar div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition: all 0.25s ease;
+
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sidebar div:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(6px);
+  color: white;
+}
+
+/* ACTIVO */
+.sidebar .active {
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* SEPARADOR */
+.sidebar hr {
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 10px 0;
+}
+
+/* SCROLL */
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main,
+.main-content {
+  margin-left: 260px;
+  padding: 25px;
+  transition: 0.3s ease;
+  box-sizing: border-box;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar.hidden ~ .main,
+.sidebar.hidden ~ .main-content {
+  margin-left: 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: var(--primary);
+  color: white;
+
+  padding: 14px 20px;
+  border-radius: 12px;
+
+  margin-bottom: 20px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+#imgUser {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 2px solid var(--primary);
+}
+
+/* CONTENIDO HEADER */
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-info b {
+  font-size: 14px;
+}
+
+.header-info small {
+  opacity: 0.85;
+}
+
+/* HOSPITAL */
+.hospital-info {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+  border-left: 5px solid var(--primary);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input, select {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+}
+
+/* =========================
+   BACKGROUND DASHBOARD
+========================= */
+
+.dashboard-bg {
+  background: url("../assets/imagenes/fondos/fondo_inicio.png") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+.dashboard-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(244, 246, 249, 0.85);
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   FILTROS
+========================= */
+
+.filtro-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filtro-bar input,
+.filtro-bar select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.btn-filtro {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* =========================
+   PACIENTE CARD
+========================= */
+
+.paciente-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(255,255,255,0.95);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  border-left: 5px solid var(--primary);
+
+  transition: 0.3s;
+}
+
+.paciente-card:hover {
+  transform: translateX(5px);
+}
+
+/* INFO PACIENTE */
+.paciente-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.paciente-info img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* BADGES */
+.badge {
+  padding: 5px 10px;
+  border-radius: 8px;
+  color: white;
+  font-size: 12px;
+}
+
+.Masculino { background: #2c7be5; }
+.Femenino { background: #e83e8c; }
+
+/* =========================
+   USER IMAGE
+========================= */
+
+#imgUser {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* =========================
+   UTIL
+========================= */
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,1 @@
+router.get("/pdf", auth, controller.exportarPDFGeneral);
