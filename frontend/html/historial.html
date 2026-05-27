@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/historial.css">
+
 </head>
 
 <body onload="initHistorial()">
@@ -19,6 +20,7 @@
 
   <!-- HEADER -->
   <div class="header">
+
     <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
 
     <div class="user-info">
@@ -28,14 +30,13 @@
         <small id="rolUser"></small>
       </div>
     </div>
+
   </div>
 
-  <!-- BOTÓN PRINCIPAL -->
-  <div style="margin:15px 0;">
-    <button onclick="descargarPDFGeneral()">
-      📊 Descargar Historial Completo
-    </button>
-  </div>
+  <!-- BOTÓN EXPORTAR -->
+  <button onclick="descargarPDFGeneral()" style="margin: 10px 0;">
+    📊 Descargar Historial Completo
+  </button>
 
   <!-- FILTROS -->
   <div class="card filtros">
@@ -45,14 +46,15 @@
     <div class="grid-filtros">
 
       <input id="fNombre" placeholder="Nombre paciente">
-
+      
       <select id="fGenero">
         <option value="">Género</option>
-        <option value="Masculino">Masculino</option>
-        <option value="Femenino">Femenino</option>
+        <option>Masculino</option>
+        <option>Femenino</option>
       </select>
 
       <input id="fHospital" placeholder="Hospital">
+
       <input id="fDoctor" placeholder="Doctor">
 
       <select id="orden">
@@ -80,19 +82,14 @@
 <script>
 function initHistorial() {
 
-  // 🔐 FASE 3: seguridad
-  proteger("historial");
+  // 🔐 seguridad centralizada
+  initPagina("historial");
 
-  // 👤 usuario UI
+  // 👤 usuario
   cargarUsuario();
 
-  // 📋 cargar datos
-  if (typeof cargarHistorial === "function") {
-    cargarHistorial();
-  }
-
-  // 🎯 marcar activo
-  marcarActivo("historial");
+  // 📋 carga historial
+  cargarHistorial();
 }
 </script>
 

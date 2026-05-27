@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/users.css">
+
 </head>
 
 <body onload="initUsers()">
@@ -19,6 +20,7 @@
 
   <!-- HEADER -->
   <div class="header">
+
     <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
 
     <div class="user-info">
@@ -28,13 +30,41 @@
         <small id="rolUser"></small>
       </div>
     </div>
+
   </div>
 
-  <!-- CONTENIDO -->
+  <!-- TÍTULO -->
   <div class="card">
-    <h2>Gestión de Usuarios</h2>
+    <h2>👤 Gestión de Usuarios</h2>
+    <p>Administración de roles y accesos del sistema</p>
+  </div>
+
+  <!-- LISTA USUARIOS -->
+  <div class="card">
+
+    <h3>Usuarios Registrados</h3>
 
     <div id="listaUsuarios"></div>
+
+  </div>
+
+  <!-- CREAR USUARIO -->
+  <div class="card">
+
+    <h3>➕ Crear Usuario</h3>
+
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Contraseña">
+
+    <select id="rol">
+      <option value="doctor">Doctor</option>
+      <option value="especialista">Especialista</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <button onclick="crearUsuario()">Crear Usuario</button>
+
   </div>
 
 </div>
@@ -47,28 +77,15 @@
 <script>
 function initUsers() {
 
-  // 🔐 SEGURIDAD FASE 3 (OBLIGATORIO)
-  proteger("users");
+  // 🔐 solo admin
+  initPagina("users");
 
-  // 🚨 EXTRA: doble control de seguridad (solo admin)
-  const user = JSON.parse(localStorage.getItem("usuario"));
-
-  if (!user || user.rol !== "admin") {
-    window.location.href = "/html/dashboard.html";
-    return;
-  }
-
-  // 👤 cargar usuario UI
+  // 👤 usuario
   cargarUsuario();
 
-  // 📦 cargar usuarios
+  // 👥 cargar usuarios
   if (typeof cargarUsuarios === "function") {
     cargarUsuarios();
-  }
-
-  // 🎯 marcar activo menú
-  if (typeof marcarActivo === "function") {
-    marcarActivo("users");
   }
 }
 </script>

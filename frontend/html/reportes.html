@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/reportes.css">
+
 </head>
 
 <body onload="initReportes()">
@@ -19,6 +20,7 @@
 
   <!-- HEADER -->
   <div class="header">
+
     <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
 
     <div class="user-info">
@@ -28,13 +30,44 @@
         <small id="rolUser"></small>
       </div>
     </div>
+
   </div>
 
-  <!-- CONTENIDO -->
+  <!-- TÍTULO -->
   <div class="card">
-    <h2>📊 Reportes Clínicos</h2>
+    <h2>📊 Panel de Reportes Clínicos</h2>
+    <p>Resumen estadístico del sistema hospitalario</p>
+  </div>
 
-    <div id="reportesContainer"></div>
+  <!-- GRID REPORTES -->
+  <div class="grid">
+
+    <div class="card">
+      <h3>📈 Pacientes</h3>
+      <p id="totalPacientes">--</p>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Diagnósticos Hoy</h3>
+      <p id="diagnosticosHoy">--</p>
+    </div>
+
+    <div class="card">
+      <h3>🏥 Hospitales Activos</h3>
+      <p id="hospitalesActivos">--</p>
+    </div>
+
+    <div class="card">
+      <h3>👨‍⚕️ Usuarios Activos</h3>
+      <p id="usuariosActivos">--</p>
+    </div>
+
+  </div>
+
+  <!-- DETALLE -->
+  <div class="card">
+    <h3>📊 Análisis General</h3>
+    <div id="analisisReportes"></div>
   </div>
 
 </div>
@@ -47,28 +80,15 @@
 <script>
 function initReportes() {
 
-  // 🔐 SEGURIDAD BASE FASE 3
-  proteger("reportes");
+  // 🔐 seguridad centralizada
+  initPagina("reportes");
 
-  // 🚨 SOLO ADMIN ACCEDE
-  const user = JSON.parse(localStorage.getItem("usuario"));
-
-  if (!user || user.rol !== "admin") {
-    window.location.href = "/html/dashboard.html";
-    return;
-  }
-
-  // 👤 UI usuario
+  // 👤 usuario
   cargarUsuario();
 
-  // 📊 cargar reportes
+  // 📊 cargar datos del dashboard ejecutivo
   if (typeof cargarReportes === "function") {
     cargarReportes();
-  }
-
-  // 🎯 menú activo
-  if (typeof marcarActivo === "function") {
-    marcarActivo("reportes");
   }
 }
 </script>

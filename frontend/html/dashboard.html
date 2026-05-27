@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>HealthNet - Dashboard</title>
@@ -65,7 +66,7 @@
       </div>
     </div>
 
-    <!-- LISTA PACIENTES -->
+    <!-- LISTA -->
     <div id="listaPacientes"></div>
 
     <!-- ESTADÍSTICAS -->
@@ -79,7 +80,7 @@
 
 </div>
 
-<!-- SCRIPTS (ORDEN CORRECTO IMPORTANTE) -->
+<!-- SCRIPTS -->
 <script src="../js/layout.js"></script>
 <script src="../js/proteccion.js"></script>
 <script src="../js/dashboard.js"></script>
@@ -87,23 +88,16 @@
 <script>
 function initDashboard() {
 
-  // 🔐 1. verificar sesión (OBLIGATORIO)
-  if (typeof verificarSesion === "function") {
-    if (!verificarSesion()) return;
-  }
+  // 🔐 1. seguridad centralizada
+  initPagina("dashboard");
 
-  // 🔐 2. protección de ruta
-  proteger("dashboard");
-
-  // 👤 3. cargar usuario UI
+  // 👤 2. cargar usuario
   cargarUsuario();
 
-  // 📊 4. cargar datos dashboard (backend)
-  if (typeof cargarDashboard === "function") {
-    cargarDashboard();
-  }
+  // 📊 3. cargar dashboard
+  cargarDashboard();
 
-  // 👥 5. cargar pacientes si existe
+  // 👥 4. cargar pacientes si existe
   if (typeof cargarPacientes === "function") {
     cargarPacientes();
   }
