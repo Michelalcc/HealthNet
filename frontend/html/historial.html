@@ -7,13 +7,20 @@
 
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/historial.css">
-
 </head>
 
 <body onload="initHistorial()">
 
 <!-- SIDEBAR -->
-<div id="sidebar" class="sidebar"></div>
+<div id="sidebar" class="sidebar">
+  <div class="logo">🏥 HealthNet</div>
+
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial</div>
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+</div>
 
 <!-- MAIN -->
 <div class="main">
@@ -33,24 +40,26 @@
 
   </div>
 
-  <!-- BOTÓN EXPORTAR -->
-  <button onclick="descargarPDFGeneral()" style="margin: 10px 0;">
-    📊 Descargar Historial Completo
-  </button>
+  <!-- BOTÓN ACCIÓN -->
+  <div class="card">
+    <button onclick="descargarPDFGeneral()">
+      📊 Descargar Historial Completo
+    </button>
+  </div>
 
   <!-- FILTROS -->
   <div class="card filtros">
 
-    <h3>Filtros Clínicos</h3>
+    <h3>📋 Historial Clínico</h3>
 
     <div class="grid-filtros">
 
       <input id="fNombre" placeholder="Nombre paciente">
-      
+
       <select id="fGenero">
         <option value="">Género</option>
-        <option>Masculino</option>
-        <option>Femenino</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
       </select>
 
       <input id="fHospital" placeholder="Hospital">
@@ -74,22 +83,22 @@
 
 </div>
 
-<!-- SCRIPTS -->
-<script src="../js/layout.js"></script>
+<!-- SCRIPTS (ORDEN FASE 3) -->
 <script src="../js/proteccion.js"></script>
+<script src="../js/layout.js"></script>
 <script src="../js/historial.js"></script>
 
 <script>
 function initHistorial() {
 
-  // 🔐 seguridad centralizada
-  initPagina("historial");
+  // 🔐 SEGURIDAD CENTRALIZADA
+  if (!proteger("historial")) return;
 
-  // 👤 usuario
   cargarUsuario();
 
-  // 📋 carga historial
-  cargarHistorial();
+  if (typeof cargarHistorial === "function") {
+    cargarHistorial();
+  }
 }
 </script>
 

@@ -12,13 +12,24 @@
 <body onload="initHospitales()">
 
 <!-- SIDEBAR -->
-<div id="sidebar" class="sidebar"></div>
+<div id="sidebar" class="sidebar">
+  <div class="logo">🏥 HealthNet</div>
+
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial</div>
+  <div onclick="location.href='users.html'">👤 Usuarios</div>
+  <div onclick="location.href='hospitales.html'">🏥 Hospitales</div>
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+</div>
 
 <!-- MAIN -->
 <div class="main">
 
   <!-- HEADER -->
   <div class="header">
+
     <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
 
     <div class="user-info">
@@ -28,47 +39,49 @@
         <small id="rolUser"></small>
       </div>
     </div>
+
   </div>
 
   <!-- CONTENIDO -->
   <div class="card">
-    <h2>Gestión de Hospitales</h2>
 
-    <div id="listaHospitales"></div>
+    <h3>🏥 Gestión de Hospitales</h3>
+
+    <div class="filtros-grid">
+
+      <input id="buscarHospital" placeholder="Buscar hospital...">
+
+      <select id="ordenHospital">
+        <option value="az">A - Z</option>
+        <option value="za">Z - A</option>
+      </select>
+
+      <button onclick="cargarHospitales()">🔍 Buscar</button>
+
+    </div>
+
   </div>
+
+  <!-- LISTA -->
+  <div id="listaHospitales"></div>
 
 </div>
 
-<!-- SCRIPTS -->
-<script src="../js/layout.js"></script>
+<!-- SCRIPTS (ORDEN FASE 3) -->
 <script src="../js/proteccion.js"></script>
+<script src="../js/layout.js"></script>
 <script src="../js/hospitales.js"></script>
 
 <script>
 function initHospitales() {
 
-  // 🔐 SEGURIDAD FASE 3
-  proteger("hospitales");
+  // 🔐 SEGURIDAD CENTRALIZADA
+  if (!proteger("hospitales")) return;
 
-  // 🚨 SOLO ADMIN PUEDE ENTRAR
-  const user = JSON.parse(localStorage.getItem("usuario"));
-
-  if (!user || user.rol !== "admin") {
-    window.location.href = "/html/dashboard.html";
-    return;
-  }
-
-  // 👤 usuario UI
   cargarUsuario();
 
-  // 📦 datos hospitales
   if (typeof cargarHospitales === "function") {
     cargarHospitales();
-  }
-
-  // 🎯 menú activo
-  if (typeof marcarActivo === "function") {
-    marcarActivo("hospitales");
   }
 }
 </script>

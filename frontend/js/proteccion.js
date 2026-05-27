@@ -1,25 +1,83 @@
-function initPagina(pagina) {
+// =========================
+// 🔐 SISTEMA ÚNICO DE PROTECCIÓN FRONTEND
+// =========================
 
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
-  const token = localStorage.getItem("token");
+function getUsuario() {
+  return JSON.parse(localStorage.getItem("usuario"));
+}
 
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+// =========================
+// 🔐 PROTEGER PÁGINA (FUNCIÓN OFICIAL)
+// =========================
+function proteger(pagina) {
+
+  const usuario = getUsuario();
+  const token = getToken();
+
+  // 🚨 sin sesión
   if (!usuario || !token) {
     window.location.href = "/html/index.html";
-    return;
+    return false;
   }
 
+  // 🚨 sin rol
+  if (!usuario.rol) {
+    window.location.href = "/html/index.html";
+    return false;
+  }
+
+  // =========================
+  // 👥 PERMISOS POR ROL
+  // =========================
   const permisos = {
-    admin: ["dashboard", "diagnostico", "pacientes", "historial", "users", "hospitales", "reportes"],
-    doctor: ["dashboard", "diagnostico", "pacientes", "historial"],
-    especialista: ["dashboard", "diagnostico"]
+    admin: [
+      "dashboard",
+      "diagnostico",
+      "pacientes",
+      "historial",
+      "users",
+      "hospitales",
+      "reportes"
+    ],
+    doctor: [
+      "dashboard",
+      "diagnostico",
+      "pacientes",
+      "historial"
+    ],
+    especialista: [
+      "dashboard",
+      "diagnostico"
+    ]
   };
 
   const accesos = permisos[usuario.rol];
 
-  if (!accesos || !accesos.includes(pagina)) {
-    window.location.href = "/html/dashboard.html";
-    return;
+  // 🚨 rol inexistente
+  if (!accesos) {
+    window.location.href = "/html/index.html";
+    return false;
   }
 
-  cargarUsuario();
+  // 🚨 sin permiso a la página
+  if (!accesos.includes(pagina)) {
+    window.location.href = "/html/dashboard.html";
+    return false;
+  }
+
+  return true;
+}
+
+// =========================
+// 🔐 VERIFICACIÓN RÁPIDA (OPCIONAL)
+// =========================
+function verificarSesion() {
+  const usuario = getUsuario();
+  const token = getToken();
+
+  return !!(usuario && token);
 }

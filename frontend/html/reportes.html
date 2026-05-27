@@ -7,13 +7,23 @@
 
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/reportes.css">
-
 </head>
 
 <body onload="initReportes()">
 
 <!-- SIDEBAR -->
-<div id="sidebar" class="sidebar"></div>
+<div id="sidebar" class="sidebar">
+  <div class="logo">🏥 HealthNet</div>
+
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial</div>
+  <div onclick="location.href='users.html'">👤 Usuarios</div>
+  <div onclick="location.href='hospitales.html'">🏥 Hospitales</div>
+  <div onclick="location.href='reportes.html'">📊 Reportes</div>
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+</div>
 
 <!-- MAIN -->
 <div class="main">
@@ -33,60 +43,50 @@
 
   </div>
 
-  <!-- TÍTULO -->
+  <!-- CONTENIDO -->
   <div class="card">
-    <h2>📊 Panel de Reportes Clínicos</h2>
-    <p>Resumen estadístico del sistema hospitalario</p>
-  </div>
 
-  <!-- GRID REPORTES -->
-  <div class="grid">
+    <h3>📊 Panel de Reportes Clínicos</h3>
 
-    <div class="card">
-      <h3>📈 Pacientes</h3>
-      <p id="totalPacientes">--</p>
-    </div>
+    <div class="filtros-grid">
 
-    <div class="card">
-      <h3>🧠 Diagnósticos Hoy</h3>
-      <p id="diagnosticosHoy">--</p>
-    </div>
+      <select id="tipoReporte">
+        <option value="general">General</option>
+        <option value="pacientes">Pacientes</option>
+        <option value="diagnosticos">Diagnósticos</option>
+        <option value="hospitales">Hospitales</option>
+      </select>
 
-    <div class="card">
-      <h3>🏥 Hospitales Activos</h3>
-      <p id="hospitalesActivos">--</p>
-    </div>
+      <select id="rangoFecha">
+        <option value="hoy">Hoy</option>
+        <option value="semana">Última semana</option>
+        <option value="mes">Último mes</option>
+      </select>
 
-    <div class="card">
-      <h3>👨‍⚕️ Usuarios Activos</h3>
-      <p id="usuariosActivos">--</p>
+      <button onclick="generarReporte()">📈 Generar</button>
+
     </div>
 
   </div>
 
-  <!-- DETALLE -->
-  <div class="card">
-    <h3>📊 Análisis General</h3>
-    <div id="analisisReportes"></div>
-  </div>
+  <!-- RESULTADOS -->
+  <div id="contenedorReportes"></div>
 
 </div>
 
-<!-- SCRIPTS -->
-<script src="../js/layout.js"></script>
+<!-- SCRIPTS (ORDEN FASE 3) -->
 <script src="../js/proteccion.js"></script>
+<script src="../js/layout.js"></script>
 <script src="../js/reportes.js"></script>
 
 <script>
 function initReportes() {
 
-  // 🔐 seguridad centralizada
-  initPagina("reportes");
+  // 🔐 SEGURIDAD CENTRALIZADA
+  if (!proteger("reportes")) return;
 
-  // 👤 usuario
   cargarUsuario();
 
-  // 📊 cargar datos del dashboard ejecutivo
   if (typeof cargarReportes === "function") {
     cargarReportes();
   }

@@ -7,13 +7,21 @@
 
 <link rel="stylesheet" href="../css/layout.css">
 <link rel="stylesheet" href="../css/users.css">
-
 </head>
 
 <body onload="initUsers()">
 
 <!-- SIDEBAR -->
-<div id="sidebar" class="sidebar"></div>
+<div id="sidebar" class="sidebar">
+  <div class="logo">🏥 HealthNet</div>
+
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial</div>
+  <div onclick="location.href='users.html'">👤 Usuarios</div>
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+</div>
 
 <!-- MAIN -->
 <div class="main">
@@ -33,57 +41,46 @@
 
   </div>
 
-  <!-- TÍTULO -->
-  <div class="card">
-    <h2>👤 Gestión de Usuarios</h2>
-    <p>Administración de roles y accesos del sistema</p>
-  </div>
-
-  <!-- LISTA USUARIOS -->
+  <!-- CONTENIDO -->
   <div class="card">
 
-    <h3>Usuarios Registrados</h3>
+    <h3>👤 Gestión de Usuarios</h3>
 
-    <div id="listaUsuarios"></div>
+    <div class="filtros-grid">
 
-  </div>
+      <input id="buscarUsuario" placeholder="Buscar usuario...">
 
-  <!-- CREAR USUARIO -->
-  <div class="card">
+      <select id="filtroRol">
+        <option value="">Todos los roles</option>
+        <option value="admin">Administrador</option>
+        <option value="doctor">Doctor</option>
+        <option value="especialista">Especialista</option>
+      </select>
 
-    <h3>➕ Crear Usuario</h3>
+      <button onclick="cargarUsuarios()">🔍 Buscar</button>
 
-    <input type="text" id="nombre" placeholder="Nombre">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Contraseña">
-
-    <select id="rol">
-      <option value="doctor">Doctor</option>
-      <option value="especialista">Especialista</option>
-      <option value="admin">Admin</option>
-    </select>
-
-    <button onclick="crearUsuario()">Crear Usuario</button>
+    </div>
 
   </div>
+
+  <!-- LISTA -->
+  <div id="listaUsuarios"></div>
 
 </div>
 
-<!-- SCRIPTS -->
-<script src="../js/layout.js"></script>
+<!-- SCRIPTS (ORDEN FASE 3) -->
 <script src="../js/proteccion.js"></script>
+<script src="../js/layout.js"></script>
 <script src="../js/users.js"></script>
 
 <script>
 function initUsers() {
 
-  // 🔐 solo admin
-  initPagina("users");
+  // 🔐 SEGURIDAD CENTRALIZADA
+  if (!proteger("users")) return;
 
-  // 👤 usuario
   cargarUsuario();
 
-  // 👥 cargar usuarios
   if (typeof cargarUsuarios === "function") {
     cargarUsuarios();
   }

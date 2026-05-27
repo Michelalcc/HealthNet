@@ -20,6 +20,7 @@ body {
   background-size: cover;
 }
 
+/* capa oscura */
 body::before {
   content: "";
   position: fixed;
@@ -57,6 +58,16 @@ body::before {
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   margin-bottom: 20px;
+}
+
+/* =========================
+   IMAGEN
+========================= */
+
+#preview {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
 /* =========================
@@ -101,7 +112,14 @@ button:hover {
 <body onload="initDiagnostico()">
 
 <!-- SIDEBAR -->
-<div id="sidebar" class="sidebar"></div>
+<div id="sidebar" class="sidebar">
+  <div class="logo">🏥 HealthNet</div>
+  <div onclick="location.href='dashboard.html'">🏠 Inicio</div>
+  <div onclick="location.href='diagnostico.html'">🧠 Diagnóstico IA</div>
+  <div onclick="location.href='pacientes.html'">👥 Pacientes</div>
+  <div onclick="location.href='historial.html'">📋 Historial</div>
+  <div onclick="logout()">🚪 Cerrar sesión</div>
+</div>
 
 <!-- MAIN -->
 <div class="main">
@@ -128,9 +146,8 @@ button:hover {
       <div class="card">
         <h3>Subir Imagen Médica</h3>
         <input type="file" id="imageInput"><br><br>
-        <img id="preview" width="100%">
-        <br><br>
-        <button onclick="analizar()">Analizar IA</button>
+        <img id="preview"><br><br>
+        <button onclick="analizar()">Analizar</button>
       </div>
 
       <div class="card" id="resultadoCard"></div>
@@ -169,7 +186,7 @@ button:hover {
 
       </div>
 
-      <button onclick="guardarDiagnostico()">Guardar Diagnóstico</button>
+      <button onclick="guardar()">Guardar Diagnóstico</button>
 
     </div>
 
@@ -177,24 +194,19 @@ button:hover {
 
 </div>
 
-<!-- SCRIPTS -->
-<script src="../js/layout.js"></script>
+<!-- SCRIPTS (ORDEN FASE 3) -->
 <script src="../js/proteccion.js"></script>
+<script src="../js/layout.js"></script>
 <script src="../js/ia.js"></script>
 
 <script>
 function initDiagnostico() {
 
-  // 🔐 seguridad centralizada
-  initPagina("diagnostico");
+  // 🔐 SEGURIDAD CENTRALIZADA
+  if (!proteger("diagnostico")) return;
 
-  // 👤 usuario
   cargarUsuario();
 
-  // 🧠 inicialización IA si existe
-  if (typeof cargarIA === "function") {
-    cargarIA();
-  }
 }
 </script>
 
