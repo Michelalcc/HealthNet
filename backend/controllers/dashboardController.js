@@ -5,6 +5,8 @@ const getDashboard = async (req, res) => {
     const hospitalId = req.user.hospital_id;
     const rol = req.user.rol;
 
+    const isAdmin = rol === "admin";
+
     // 🔥 VALIDACIÓN IMPORTANTE
     if (!hospitalId) {
       return res.json({
@@ -21,18 +23,25 @@ const getDashboard = async (req, res) => {
 const hospitalFilter = hospitalId ? "WHERE hospital_id = $1" : "";
 const params = hospitalId ? [hospitalId] : [];
 
-const pacientes = await pool.query(
-  `SELECT COUNT(*) FROM pacientes ${hospitalFilter}`,
-  params
-);
+const pacientes = isAdmin
+  ? await pool.query("SELECT COUNT(*) FROM pacientes")
+  : await pool.query(
+      "SELECT COUNT(*) FROM pacientes WHERE hospital_id = $1",
+      [hospitalId]
+    );
 
     // 🧠 DIAGNÓSTICOS HOY (más seguro)
-const diagnosticos = await pool.query(
-  hospitalId
-    ? `SELECT COUNT(*) FROM diagnosticos WHERE hospital_id = $1`
-    : `SELECT COUNT(*) FROM diagnosticos`,
-  hospitalId ? [hospitalId] : []
-);
+const diagnosticos = isAdmin
+  ? await pool.query(
+      `SELECT COUNT(*) FROM diagnosticos WHERE DATE(fecha) = CURRENT_DATE`
+    )
+  : await pool.query(
+      `SELECT COUNT(*) 
+       FROM diagnosticos 
+       WHERE DATE(fecha) = CURRENT_DATE
+       AND hospital_id = $1`,
+      [hospitalId]
+    );
 
     res.json({
       totalPacientes: parseInt(pacientes.rows[0].count),

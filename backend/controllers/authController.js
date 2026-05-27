@@ -40,15 +40,18 @@ const login = async (req, res) => {
     );
 
     res.json({
-      ok: true,
-      token,
-      usuario: {
-        id: user.id,
-        email: user.email,
-        rol: user.rol,
-        hospital_id: user.hospital_id
-      }
-    });
+  ok: true,
+  message: "Login exitoso",
+  data: {
+    token,
+    usuario: {
+      id: user.id,
+      email: user.email,
+      rol: user.rol,
+      hospital_id: user.hospital_id
+    }
+  }
+});
 
   } catch (error) {
     console.error(error);
