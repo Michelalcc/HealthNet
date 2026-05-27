@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Hospitales - HealthNet</title>
+
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/hospitales.css">
+</head>
+
+<body onload="initHospitales()">
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar"></div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
+
+    <div class="user-info">
+      <img id="imgUser" width="40">
+      <div>
+        <div id="nombreUser"></div>
+        <small id="rolUser"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="card">
+    <h2>Gestión de Hospitales</h2>
+
+    <div id="listaHospitales"></div>
+  </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="../js/layout.js"></script>
+<script src="../js/proteccion.js"></script>
+<script src="../js/hospitales.js"></script>
+
+<script>
+function initHospitales() {
+
+  // 🔐 SEGURIDAD FASE 3
+  proteger("hospitales");
+
+  // 🚨 SOLO ADMIN PUEDE ENTRAR
+  const user = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!user || user.rol !== "admin") {
+    window.location.href = "/html/dashboard.html";
+    return;
+  }
+
+  // 👤 usuario UI
+  cargarUsuario();
+
+  // 📦 datos hospitales
+  if (typeof cargarHospitales === "function") {
+    cargarHospitales();
+  }
+
+  // 🎯 menú activo
+  if (typeof marcarActivo === "function") {
+    marcarActivo("hospitales");
+  }
+}
+</script>
+
+</body>
+</html>

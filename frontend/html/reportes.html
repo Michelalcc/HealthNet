@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Reportes - HealthNet</title>
+
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/reportes.css">
+</head>
+
+<body onload="initReportes()">
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar"></div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
+
+    <div class="user-info">
+      <img id="imgUser" width="40">
+      <div>
+        <div id="nombreUser"></div>
+        <small id="rolUser"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="card">
+    <h2>📊 Reportes Clínicos</h2>
+
+    <div id="reportesContainer"></div>
+  </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script src="../js/layout.js"></script>
+<script src="../js/proteccion.js"></script>
+<script src="../js/reportes.js"></script>
+
+<script>
+function initReportes() {
+
+  // 🔐 SEGURIDAD BASE FASE 3
+  proteger("reportes");
+
+  // 🚨 SOLO ADMIN ACCEDE
+  const user = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!user || user.rol !== "admin") {
+    window.location.href = "/html/dashboard.html";
+    return;
+  }
+
+  // 👤 UI usuario
+  cargarUsuario();
+
+  // 📊 cargar reportes
+  if (typeof cargarReportes === "function") {
+    cargarReportes();
+  }
+
+  // 🎯 menú activo
+  if (typeof marcarActivo === "function") {
+    marcarActivo("reportes");
+  }
+}
+</script>
+
+</body>
+</html>

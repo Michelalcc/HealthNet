@@ -1,30 +1,92 @@
-<body onload="protegerRuta('pacientes'); cargarUsuario();">
-  
-</body><div class="filtro-bar">
+<!DOCTYPE html>
+<html lang="es">
 
-  <input 
-    type="text"
-    id="buscarPaciente"
-    placeholder="Buscar paciente..."
-  >
+<head>
+<meta charset="UTF-8">
+<title>Pacientes - HealthNet</title>
 
-  <select id="filtroGenero">
-    <option value="">Todos</option>
-    <option value="Masculino">Masculino</option>
-    <option value="Femenino">Femenino</option>
-  </select>
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/pacientes.css">
+</head>
 
-  <select id="ordenar">
-    <option value="">Ordenar</option>
-    <option value="az">A - Z</option>
-    <option value="za">Z - A</option>
-  </select>
+<body onload="initPacientes()">
 
-  <!-- 🔍 BOTÓN LUPA -->
-  <button onclick="aplicarFiltros()" class="btn-filtro">
-    🔍
-  </button>
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar"></div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span onclick="toggleMenu()" style="cursor:pointer;">☰</span>
+
+    <div class="user-info">
+      <img id="imgUser" width="40">
+      <div>
+        <div id="nombreUser"></div>
+        <small id="rolUser"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filtro-bar">
+
+    <input 
+      type="text"
+      id="buscarPaciente"
+      placeholder="Buscar paciente..."
+    >
+
+    <select id="filtroGenero">
+      <option value="">Todos</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+    </select>
+
+    <select id="ordenar">
+      <option value="">Ordenar</option>
+      <option value="az">A - Z</option>
+      <option value="za">Z - A</option>
+    </select>
+
+    <button onclick="aplicarFiltros()" class="btn-filtro">
+      🔍
+    </button>
+
+  </div>
+
+  <!-- LISTA -->
+  <div id="listaPacientes"></div>
 
 </div>
 
-<div id="listaPacientes"></div>
+<!-- SCRIPTS -->
+<script src="../js/layout.js"></script>
+<script src="../js/proteccion.js"></script>
+<script src="../js/pacientes.js"></script>
+
+<script>
+function initPacientes() {
+
+  // 🔐 FASE 3: protección centralizada
+  proteger("pacientes");
+
+  // 👤 usuario
+  cargarUsuario();
+
+  // 📦 cargar datos iniciales
+  if (typeof cargarPacientes === "function") {
+    cargarPacientes();
+  }
+
+  // 🎯 UI activa (si la usas)
+  if (typeof marcarActivo === "function") {
+    marcarActivo("pacientes");
+  }
+}
+</script>
+
+</body>
+</html>
