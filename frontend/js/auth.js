@@ -13,39 +13,42 @@ async function login() {
 
     const data = await res.json();
 
-    console.log("🔵 RESPUESTA BACKEND:", data);
-
-    if (!res.ok) {
-      alert(data.message || "Error de login");
+    // 🔐 VALIDACIÓN CRÍTICA
+    if (!data.ok || !data.data || !data.data.usuario) {
+      alert("Error en login");
+      console.error("Respuesta inválida:", data);
       return;
     }
 
-    if (!data.usuario) {
-      alert("Backend no devolvió usuario");
-      return;
-    }
+    console.log("RESPUESTA BACKEND:", data);
 
     // 💾 guardar sesión
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("usuario", JSON.stringify(data.usuario));
+    localStorage.setItem("token", data.data.token);
+    localStorage.setItem("usuario", JSON.stringify(data.data.usuario));
 
-    const rol = data.usuario.rol;
+    const rol = data.data.usuario.rol;
 
-    // 🔁 redirección correcta según tu estructura real
+    // 🔁 redirección por rol
     if (rol === "admin") {
       window.location.href = "/html/dashboard.html";
+      return;
     }
 
     if (rol === "doctor") {
       window.location.href = "/html/dashboard.html";
+      return;
     }
 
     if (rol === "especialista") {
       window.location.href = "/html/diagnostico.html";
+      return;
     }
 
+    // fallback
+    window.location.href = "/html/index.html";
+
   } catch (error) {
-    console.error(error);
+    console.error("ERROR LOGIN:", error);
     alert("No se pudo conectar con el servidor");
   }
 }

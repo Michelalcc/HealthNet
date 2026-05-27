@@ -1,53 +1,48 @@
-// =========================
-// 🔐 PROTECCIÓN DE RUTAS FRONTEND
-// =========================
-
-const PERMISOS = {
-  admin: [
-    "dashboard",
-    "diagnostico",
-    "pacientes",
-    "historial",
-    "users",
-    "hospitales",
-    "reportes"
-  ],
-  doctor: [
-    "dashboard",
-    "diagnostico",
-    "pacientes",
-    "historial"
-  ],
-  especialista: [
-    "dashboard",
-    "diagnostico"
-  ]
-};
-
-// =========================
-// PROTEGER PÁGINA
-// =========================
 function proteger(paginaActual) {
 
-  const user = JSON.parse(localStorage.getItem("usuario"));
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const token = localStorage.getItem("token");
 
-  // 🔴 si no hay sesión
-  if (!user || !user.rol) {
+  // 🔐 validación de sesión completa
+  if (!usuario || !token || !usuario.rol) {
     window.location.href = "/html/index.html";
     return;
   }
 
-  const permisosUsuario = PERMISOS[user.rol];
+  // 🔐 permisos centralizados
+  const PERMISOS = {
+    admin: [
+      "dashboard",
+      "diagnostico",
+      "pacientes",
+      "historial",
+      "users",
+      "hospitales",
+      "reportes"
+    ],
+    doctor: [
+      "dashboard",
+      "diagnostico",
+      "pacientes",
+      "historial"
+    ],
+    especialista: [
+      "dashboard",
+      "diagnostico"
+    ]
+  };
 
-  // 🔴 si rol no existe en sistema
-  if (!permisosUsuario) {
-    console.warn("Rol desconocido:", user.rol);
+  const accesos = PERMISOS[usuario.rol];
+
+  // 🔐 rol no reconocido
+  if (!accesos) {
+    console.warn("Rol no válido:", usuario.rol);
     window.location.href = "/html/index.html";
     return;
   }
 
-  // 🔴 si no tiene acceso a la página
-  if (!permisosUsuario.includes(paginaActual)) {
+  // 🔐 acceso denegado
+  if (!accesos.includes(paginaActual)) {
     window.location.href = "/html/dashboard.html";
     return;
   }
